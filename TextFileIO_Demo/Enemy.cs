@@ -46,9 +46,9 @@ namespace TextFileIO_Demo
         // --------------------------------------------------------------------
 
         /// <summary>
-        /// Returns information that represents an Enemy object
+        /// Formats Enemy data in a readable string
         /// </summary>
-        /// <returns>Information about an instance of Enemy</returns>
+        /// <returns>String representation of an Enemy object</returns>
         public override string ToString()
         {
             string formattedInfo = 

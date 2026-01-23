@@ -23,26 +23,23 @@ namespace TextFileIO_Demo
             try
             {
                 // Instantiate the reader
-                reader = new StreamReader("../../../EnemyData.txt");
+                //reader = new StreamReader("../../../EnemyData.txt");
+                reader = new StreamReader("../../../aaaaa.txt");
 
                 // lineFromFile will contain every line read in from the text file.
                 string lineFromFile = "";
 
                 // Continually read lines from the file until the data runs out
-                while( (lineFromFile = reader.ReadLine()!) != null )
+                while ((lineFromFile = reader.ReadLine()!) != null)
                 {
-                    // Lines are serialized like this: "Name,Health,Attack"
-                    // Split the data into an array of strings to be able to extract
-                    //   data from the line, independently, and parsing where needed.
                     string[] splitData = lineFromFile.Split(',');
 
-                    // Instantiate enemies and add to the Enemy list
-                    Enemy someDude = new Enemy(
+                    Enemy newGuy = new Enemy(
                         splitData[0],                   // Name
-                        int.Parse(splitData[2]),        // Attack
-                        int.Parse(splitData[1]));       // Health
+                        int.Parse(splitData[1]),        // Attack
+                        int.Parse(splitData[2]));       // Health
 
-                    enemyList.Add(someDude);
+                    enemyList.Add(newGuy);
                 }
             }
             catch(Exception error)
