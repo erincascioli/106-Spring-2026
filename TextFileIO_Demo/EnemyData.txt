@@ -1,0 +1,5 @@
+Freddy,5,5
+Joe,6,5
+ChatGPT,1,100
+Chair,3,50
+Golden Freddy,10,10
