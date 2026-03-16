@@ -19,6 +19,14 @@ namespace IntroMonogame_Demo
 
         // Movement fields
         private int xPosition;
+        private float radians;
+
+        // SpriteFont data
+        private SpriteFont arial20;
+
+        // Input fields
+        private KeyboardState kbState;
+        private MouseState mState;
 
 
         public Game1()
@@ -33,6 +41,7 @@ namespace IntroMonogame_Demo
             screenWidth = _graphics.PreferredBackBufferWidth;
             screenHeight = _graphics.PreferredBackBufferHeight;
             xPosition = 0;
+            radians = 0f;
 
             base.Initialize();
         }
@@ -43,6 +52,8 @@ namespace IntroMonogame_Demo
 
             planet = Content.Load<Texture2D>("planet01");
             splat = Content.Load<Texture2D>("splat02");
+
+            arial20 = Content.Load<SpriteFont>("arial-20");
         }
 
         protected override void Update(GameTime gameTime)
@@ -50,11 +61,22 @@ namespace IntroMonogame_Demo
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // KeyboardState opbject instantiation is done with GetState
+            kbState = Keyboard.GetState();
+            mState = Mouse.GetState();
+
+            // ALWAYS want the object to move/wrap
             xPosition += 2;
 
             if(xPosition >= screenWidth)
             {
                 xPosition = -splat.Width;
+            }
+
+            if (kbState.IsKeyDown(Keys.R) && kbState.IsKeyDown(Keys.LeftShift))
+            {
+                // ONLY rotate while R is pressed
+                radians += 0.05f;
             }
 
             base.Update(gameTime);
@@ -82,6 +104,40 @@ namespace IntroMonogame_Demo
                     splat.Width/2, 
                     splat.Height/2),            // Rectangle
                 Color.SkyBlue);                 // Color tint
+
+
+            // TODO: Draw one of your sprites somewhere in the bottom right of the game window:
+            _spriteBatch.Draw(
+                planet,
+                new Rectangle(500, 180, planet.Width/4, planet.Height/4),
+                Color.Red);
+
+            // Draw it rotated!
+            _spriteBatch.Draw(
+                planet,
+                new Rectangle(
+                    500 + (planet.Width/8), 
+                    180 + (planet.Height/8), 
+                    planet.Width/4, 
+                    planet.Height/4),
+                null,
+                Color.White,
+                radians,
+                new Vector2(planet.Width/2, planet.Height/2),
+                SpriteEffects.None,
+                1f);
+
+            _spriteBatch.DrawString(
+                arial20,                                            // SpriteFont
+                "This text will appear in the foreground",          // Text
+                new Vector2(0, 0),                                  // Position upper-left
+                Color.Lime);                                        // Color of text
+
+            _spriteBatch.DrawString(
+                arial20,                                            // SpriteFont
+                mState.X.ToString(),                                 // Text
+                new Vector2(0, 80),                                 // Position upper-left
+                Color.Maroon);                                      // Color of text
 
             // ALWAYS DO THIS
             _spriteBatch.End();
