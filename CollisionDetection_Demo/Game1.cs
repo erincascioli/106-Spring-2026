@@ -29,7 +29,7 @@ namespace CollisionDetection_Demo
         {
             // Rectangles are not dependent on loaded content, so they can be initialized
             //   in Initialize instead if LoadContent
-            firstBox = new Rectangle(50, 50, 100, 100);
+            firstBox = new Rectangle(250, 50, 100, 100);
             secondBox = new Rectangle(75, 75, 100, 100);
 
             base.Initialize();
@@ -48,6 +48,14 @@ namespace CollisionDetection_Demo
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || 
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            // Do the 2 Rectangles overlap?
+            bool overlap = firstBox.Intersects(secondBox);
+
+            // The Intersect method is not the same...  this returns the Rectangle
+            //   that represents the overlapping area of 2 rectangles.
+            // If no overlap, returns a Rectangle of (0, 0, 0, 0) and NOT null. 
+            Rectangle intersectingArea = Rectangle.Intersect(firstBox, secondBox);
 
             base.Update(gameTime);
         }
